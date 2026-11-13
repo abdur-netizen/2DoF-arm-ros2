@@ -1,0 +1,7 @@
+# ROS 2 / colcon generated output
+/arm_ws/build/
+/arm_ws/install/
+/arm_ws/log/
+**/__pycache__/
+*.py[cod]
+.pytest_cache/
