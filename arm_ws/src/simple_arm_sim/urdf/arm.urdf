@@ -1,0 +1,177 @@
+<?xml version="1.0"?>
+<robot name="simple_2dof_arm">
+
+  <!-- ================= BASE LINK ================= -->
+  <link name="base_link">
+    <visual>
+      <geometry><cylinder length="0.05" radius="0.1"/></geometry>
+      <material name="gray"><color rgba="0.5 0.5 0.5 1"/></material>
+    </visual>
+    <collision>
+      <geometry><cylinder length="0.05" radius="0.1"/></geometry>
+    </collision>
+    <inertial>
+      <mass value="5.0"/>
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.02"/>
+    </inertial>
+  </link>
+
+  <!-- ================= LINK 1 (BICEP) ================= -->
+  <link name="link_1">
+    <visual>
+      <geometry><cylinder length="0.4" radius="0.04"/></geometry>
+      <origin xyz="0 0 0.2" rpy="0 0 0"/>
+      <material name="blue"><color rgba="0 0 1 1"/></material>
+    </visual>
+    <collision>
+      <geometry><cylinder length="0.4" radius="0.04"/></geometry>
+      <origin xyz="0 0 0.2" rpy="0 0 0"/>
+    </collision>
+    <inertial>
+      <mass value="1.0"/>
+      <origin xyz="0 0 0.2" rpy="0 0 0"/>
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.005"/>
+    </inertial>
+  </link>
+
+  <joint name="joint_1" type="revolute">
+    <parent link="base_link"/>
+    <child link="link_1"/>
+    <origin xyz="0 0 0.05" rpy="0 0 0"/> 
+    <axis xyz="0 1 0"/>
+    <limit lower="-1.57" upper="1.57" effort="100" velocity="1.0"/>
+  </joint>
+
+  <!-- ================= LINK 2 (FOREARM) ================= -->
+  <link name="link_2">
+    <visual>
+      <geometry><cylinder length="0.3" radius="0.03"/></geometry>
+      <origin xyz="0 0 0.15" rpy="0 0 0"/>
+      <material name="red"><color rgba="1 0 0 1"/></material>
+    </visual>
+    <collision>
+      <geometry><cylinder length="0.3" radius="0.03"/></geometry>
+      <origin xyz="0 0 0.15" rpy="0 0 0"/>
+    </collision>
+    <inertial>
+      <mass value="0.5"/>
+      <origin xyz="0 0 0.15" rpy="0 0 0"/>
+      <inertia ixx="0.005" ixy="0.0" ixz="0.0" iyy="0.005" iyz="0.0" izz="0.001"/>
+    </inertial>
+  </link>
+
+  <joint name="joint_2" type="revolute">
+    <parent link="link_1"/>
+    <child link="link_2"/>
+    <origin xyz="0 0 0.4" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1.57" upper="1.57" effort="50" velocity="1.0"/>
+  </joint>
+
+  <!-- ================= GRIPPER BASE ================= -->
+  <link name="gripper_base">
+    <visual>
+      <geometry><box size="0.02 0.08 0.02"/></geometry>
+      <material name="green"><color rgba="0 1 0 1"/></material>
+    </visual>
+    <collision>
+      <geometry><box size="0.02 0.08 0.02"/></geometry>
+    </collision>
+    <inertial>
+      <mass value="0.1"/>
+      <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/>
+    </inertial>
+  </link>
+
+  <joint name="gripper_base_joint" type="fixed">
+    <parent link="link_2"/>
+    <child link="gripper_base"/>
+    <origin xyz="0 0 0.3" rpy="0 0 0"/>
+  </joint>
+
+  <!-- ================= LEFT PRONG ================= -->
+  <link name="left_prong">
+    <visual>
+      <geometry><box size="0.02 0.01 0.06"/></geometry>
+      <origin xyz="0 0 0.03" rpy="0 0 0"/>
+      <material name="green"><color rgba="0 1 0 1"/></material>
+    </visual>
+    <collision>
+      <geometry><box size="0.02 0.01 0.06"/></geometry>
+      <origin xyz="0 0 0.03" rpy="0 0 0"/>
+    </collision>
+    <inertial>
+      <mass value="0.05"/>
+      <origin xyz="0 0 0.03" rpy="0 0 0"/>
+      <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/>
+    </inertial>
+  </link>
+
+  <joint name="left_prong_joint" type="prismatic">
+    <parent link="gripper_base"/>
+    <child link="left_prong"/>
+    <origin xyz="0 0.035 0.01" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-0.03" upper="0.0" effort="20" velocity="0.5"/>
+  </joint>
+
+  <!-- ================= RIGHT PRONG ================= -->
+  <link name="right_prong">
+    <visual>
+      <geometry><box size="0.02 0.01 0.06"/></geometry>
+      <origin xyz="0 0 0.03" rpy="0 0 0"/>
+      <material name="green"><color rgba="0 1 0 1"/></material>
+    </visual>
+    <collision>
+      <geometry><box size="0.02 0.01 0.06"/></geometry>
+      <origin xyz="0 0 0.03" rpy="0 0 0"/>
+    </collision>
+    <inertial>
+      <mass value="0.05"/>
+      <origin xyz="0 0 0.03" rpy="0 0 0"/>
+      <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/>
+    </inertial>
+  </link>
+
+  <joint name="right_prong_joint" type="prismatic">
+    <parent link="gripper_base"/>
+    <child link="right_prong"/>
+    <origin xyz="0 -0.035 0.01" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="0.0" upper="0.03" effort="20" velocity="0.5"/>
+  </joint>
+
+  <!-- ================= ROS2 CONTROL & GAZEBO PLUGINS ================= -->
+  <ros2_control name="GazeboSystem" type="system">
+    <hardware>
+      <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+    </hardware>
+    <joint name="joint_1">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="joint_2">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="left_prong_joint">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="right_prong_joint">
+      <command_interface name="position"/>
+      <state_interface name="velocity"/>
+      <state_interface name="velocity"/>
+    </joint>
+  </ros2_control>
+
+  <gazebo>
+    <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
+      <parameters>$(find simple_arm_sim)/config/controllers.yaml</parameters>
+    </plugin>
+  </gazebo>
+
+</robot>
