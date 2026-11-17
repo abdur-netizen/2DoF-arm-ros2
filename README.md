@@ -1,5 +1,8 @@
 # 2-DoF Robotic Arm — ROS 2
 
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/61ebeb4d-d428-429c-8b81-91e4f85d4d60" />
+
+
 A ROS 2 workspace containing a simulated 2-degree-of-freedom robotic arm with a two-finger gripper, forward kinematics (FK), inverse kinematics (IK), and Gazebo launch configuration.
 
 ## Package
